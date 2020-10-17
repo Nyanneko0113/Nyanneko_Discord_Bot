@@ -36,7 +36,7 @@ public class WordSearch {
 
       YouTube.Search.List search = youtube.search().list("id,snippet");
 
-      search.setKey("AIzaSyA1rSLf2Rbro9cuO6bkw6CPli5E3maM7Ok");
+      search.setKey("");
       search.setQ(word);
 
       search.setType("video");
