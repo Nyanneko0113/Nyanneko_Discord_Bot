@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Nyanneko_Discord_Bot:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="基本を作成">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/ReservedCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ReservedManager.java" afterDir="false" />
+    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="予約投稿を追加">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Nyanneko_Discord_Bot_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" afterDir="false" />
     </list>
@@ -28,9 +33,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2kC6DxPeMBsF7ChbzhQJDlAO1TL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -44,6 +49,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last.edited.regexp": "c:\\",
+    "project.structure.last.edited": "アーティファクト",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.312",
     "アプリケーション.Main.executor": "Run"
   }
 }]]></component>
@@ -84,11 +93,20 @@
       <option name="project" value="LOCAL" />
       <updated>1722776754939</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="予約投稿を追加">
+      <option name="closed" value="true" />
+      <created>1722777101483</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1722777101483</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="基本を作成" />
-    <option name="LAST_COMMIT_MESSAGE" value="基本を作成" />
+    <MESSAGE value="予約投稿を追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="予約投稿を追加" />
   </component>
 </project>
