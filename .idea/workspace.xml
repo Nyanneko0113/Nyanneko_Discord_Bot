@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="予約投稿を追加">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Nyanneko_Discord_Bot_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" afterDir="false" />
+    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="jsonによる設定ファイルを追加">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" afterDir="false" />
     </list>
@@ -42,20 +40,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last.edited.regexp": "c:\\",
-    "project.structure.last.edited": "アーティファクト",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.312",
-    "アプリケーション.Main.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last.edited.regexp&quot;: &quot;c:\\&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;アーティファクト&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.312&quot;,
+    &quot;アプリケーション.Main.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.nyanneko0113.discord_bot.Main" />
@@ -101,12 +99,21 @@
       <option name="project" value="LOCAL" />
       <updated>1722777101483</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="jsonによる設定ファイルを追加">
+      <option name="closed" value="true" />
+      <created>1723906815615</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723906815615</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="基本を作成" />
     <MESSAGE value="予約投稿を追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="予約投稿を追加" />
+    <MESSAGE value="jsonによる設定ファイルを追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="jsonによる設定ファイルを追加" />
   </component>
 </project>

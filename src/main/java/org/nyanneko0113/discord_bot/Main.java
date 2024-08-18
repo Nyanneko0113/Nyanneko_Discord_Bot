@@ -23,8 +23,8 @@ public class Main extends ListenerAdapter implements EventListener {
     private static JDA jda;
 
     public static void main(String[] strings) throws LoginException, InterruptedException, URISyntaxException, IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         if (ConfigManager.getToken().equalsIgnoreCase("") || ConfigManager.getToken() == null) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("tokenを設定してください：");
             ConfigManager.setToken(reader.readLine());
         }
@@ -41,6 +41,21 @@ public class Main extends ListenerAdapter implements EventListener {
                             .addOptions(new OptionData(OptionType.STRING, "date", "時間"),
                                     new OptionData(OptionType.STRING, "message", "メッセージ")))
                     .queue();
+        }
+
+        System.out.print(">");
+        while (true) {
+            String line = reader.readLine();
+            String prefix = "/";
+            if (line.equalsIgnoreCase(prefix + "stop")) {
+                jda.shutdownNow();
+                System.exit(0);
+                break;
+            }
+            else {
+                System.out.print("そのコマンドは存在しません。" + "\n");
+                System.out.print(">");
+            }
         }
     }
 
