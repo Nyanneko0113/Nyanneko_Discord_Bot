@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import org.nyanneko0113.discord_bot.commands.MusicCommand;
 import org.nyanneko0113.discord_bot.commands.ReservedCommand;
 import org.nyanneko0113.discord_bot.manager.ConfigManager;
 
@@ -33,13 +34,18 @@ public class Main extends ListenerAdapter implements EventListener {
             jda = JDABuilder.createDefault(ConfigManager.getToken())
                     .addEventListeners(new Main())
                     .addEventListeners(new ReservedCommand())
+                    .addEventListeners(new MusicCommand())
                     .build();
             jda.awaitReady();
 
             jda.updateCommands()
                     .addCommands(Commands.slash("reserved-message", "予約投稿するコマンド")
                             .addOptions(new OptionData(OptionType.STRING, "date", "時間"),
-                                    new OptionData(OptionType.STRING, "message", "メッセージ")))
+                                        new OptionData(OptionType.STRING, "message", "メッセージ")))
+                    .addCommands(Commands.slash("play", "音楽を再生するコマンド")
+                            .addOption(OptionType.STRING, "url", "URL"))
+                    .addCommands(Commands.slash("skip", "スキップするコマンド"))
+                    .addCommands(Commands.slash("play-info", "情報"))
                     .queue();
         }
 
@@ -54,8 +60,8 @@ public class Main extends ListenerAdapter implements EventListener {
             }
             else {
                 System.out.print("そのコマンドは存在しません。" + "\n");
-                System.out.print(">");
             }
+            System.out.print(">");
         }
     }
 
