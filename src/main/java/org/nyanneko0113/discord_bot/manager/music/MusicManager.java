@@ -29,10 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MusicManager {
+    private static final MusicManager instance = new MusicManager();
     private final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     private final Map<Long, GuildMusicManager> musicManagers = new HashMap<>();
     YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true);
-    private static AudioTrackInfo now_play;
 
     public MusicManager() {
         AudioSourceManagers.registerLocalSource(playerManager);
@@ -46,8 +46,12 @@ public class MusicManager {
         playerManager.registerSourceManager(new GetyarnAudioSourceManager());
         playerManager.registerSourceManager(new HttpAudioSourceManager(MediaContainerRegistry.DEFAULT_REGISTRY));
     }
+    
+    public static MusicManager getInstance() {
+        return instance;
+    }
 
-    private synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
+    public synchronized GuildMusicManager getGuildAudioPlayer(Guild guild) {
         long guildId = Long.parseLong(guild.getId());
         GuildMusicManager musicManager = musicManagers.get(guildId);
 
@@ -61,7 +65,7 @@ public class MusicManager {
     }
 
 
-    private String minToString(long n) {
+    public static String minToString(long n) {
         long time = n / 1000;
         int hour = (int) (time / 3600);
         int min = (int) (time / 60);
@@ -102,7 +106,7 @@ public class MusicManager {
                 embed.setTitle("音楽が再生されます（プレイリスト：" + playlist.getName() + ")");
                 embed.addField("タイトル：", info.title, false);
                 embed.addField("URL：", info.uri, false);
-                embed.addField("時間：", info.length / 3600 + "時間" + info.length / 60 + "分" + info.length % 60 + "秒", false);
+                embed.addField("時間：", minToString(info.length), false);
                 embed.setColor(Color.GREEN);
                 channel.sendMessageEmbeds(embed.build()).complete();
 
@@ -128,18 +132,14 @@ public class MusicManager {
     }
 
     private void play(Guild guild, GuildMusicManager musicManager, AudioTrack track) {
-        now_play = track.getInfo();
         connectToFirstVoiceChannel(guild.getAudioManager());
 
-        musicManager.scheduler.queue(track);
-
-    }
-
-    public AudioTrackInfo getInfo(TextChannel channel) {
-        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-        System.out.print(musicManager.getInfo().uri);
-
-        return musicManager.getInfo();
+        if (musicManager.player.getPlayingTrack() == null) {
+            musicManager.player.playTrack(track);
+        }
+        else {
+            musicManager.scheduler.queue(track);
+        }
     }
 
     public void skipTrack(TextChannel channel) {
@@ -151,9 +151,10 @@ public class MusicManager {
         embed.setTitle("音楽はスキップされます");
         embed.addField("次のタイトル：", info.title, false);
         embed.addField("URL：", info.uri, false);
-        embed.addField("時間：", info.length / 3600 + "時間" + info.length / 60 + "分" + info.length % 60 + "秒", false);
+        embed.addField("時間：", minToString(info.length), false);
         embed.setColor(Color.GREEN);
         channel.sendMessageEmbeds(embed.build()).complete();
+
         musicManager.scheduler.nextTrack();
     }
 
@@ -181,8 +182,8 @@ public class MusicManager {
             return new AudioPlayerSendHandler(player);
         }
 
-        public AudioTrackInfo getInfo() {
-            return player.getPlayingTrack().getInfo();
+        public AudioTrack getTrack() {
+            return player.getPlayingTrack();
         }
     }
 

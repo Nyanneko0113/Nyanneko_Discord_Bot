@@ -27,7 +27,7 @@ public class MusicCommand extends ListenerAdapter {
         User user = event.getUser();
         CacheRestAction<PrivateChannel> private_channel = user.openPrivateChannel();
         Member member = event.getMember();
-        MusicManager music = new MusicManager();
+        MusicManager music = MusicManager.getInstance();
 
         if ("play".equalsIgnoreCase(cmd)) {
             OptionMapping option_url = event.getOption("url");
@@ -38,20 +38,21 @@ public class MusicCommand extends ListenerAdapter {
             music.skipTrack(channel.asTextChannel());
         }
         else if ("play-info".equalsIgnoreCase(cmd)) {
-            AudioTrackInfo info = music.getInfo(channel.asTextChannel());
+            MusicManager.GuildMusicManager guild_music = music.getGuildAudioPlayer(event.getGuild());
 
             EmbedBuilder embed = new EmbedBuilder();
-            if (info == null) {
+            if (guild_music == null || guild_music.getTrack() == null) {
                 embed.addField("現在の再生情報：", "何も再生されてません。", false);
             }
             else {
+                AudioTrackInfo info = guild_music.getTrack().getInfo();
                 embed.setTitle("現在の再生情報");
                 embed.addField("タイトル：", info.title, false);
                 embed.addField("URL：", info.uri, false);
-                embed.addField("時間：", info.length / 3600 + "時間" + info.length / 60 + "分" + info.length % 60 + "秒", false);
+                embed.addField("時間：", MusicManager.minToString(info.length), false);
             }
             embed.setColor(Color.GREEN);
-            channel.sendMessageEmbeds(embed.build()).complete();
+            event.replyEmbeds(embed.build()).queue();
 
         }
     }

@@ -5,14 +5,16 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import net.dv8tion.jda.api.EmbedBuilder;
 
+import java.awt.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TransferQueue;
 
 public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
-    private AudioTrackInfo now_play;
 
     public TrackScheduler(AudioPlayer player) {
         this.player = player;
@@ -20,25 +22,18 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void queue(AudioTrack track) {
-        System.out.print(queue.toString() + "1");
-        if (player.startTrack(track, false)) {
+        if (!player.startTrack(track, true)) {
             queue.offer(track);
-            System.out.print(queue.toString());
         }
     }
 
     public void nextTrack() {
-        if (queue.isEmpty()) {
-            player.stopTrack();
-        }
-        else {
-            player.startTrack(queue.poll(), false);
-        }
+        player.startTrack(queue.poll(), false);
     }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        if (!endReason.mayStartNext) {
+        if (endReason.mayStartNext) {
             nextTrack();
         }
     }
