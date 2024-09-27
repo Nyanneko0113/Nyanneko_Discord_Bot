@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.nyanneko0113.discord_bot.commands.MusicCommand;
 import org.nyanneko0113.discord_bot.commands.ReservedCommand;
+import org.nyanneko0113.discord_bot.listener.ButtonClickListener;
 import org.nyanneko0113.discord_bot.manager.ConfigManager;
 
 import javax.security.auth.login.LoginException;
@@ -35,6 +36,7 @@ public class Main extends ListenerAdapter implements EventListener {
                     .addEventListeners(new Main())
                     .addEventListeners(new ReservedCommand())
                     .addEventListeners(new MusicCommand())
+                    .addEventListeners(new ButtonClickListener())
                     .build();
             jda.awaitReady();
 

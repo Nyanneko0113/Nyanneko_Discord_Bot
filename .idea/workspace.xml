@@ -9,11 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="音楽再生機能を追加（仮）">
+    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="キーワード検索に対応">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/ButtonClickListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/MusicCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/MusicCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/music/MusicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/music/MusicManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/music/TrackScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/music/TrackScheduler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +132,23 @@
       <option name="project" value="LOCAL" />
       <updated>1725532335893</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="一部修正">
+      <option name="closed" value="true" />
+      <created>1726913470293</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726913470293</updated>
+    </task>
+    <task id="LOCAL-00007" summary="キーワード検索に対応">
+      <option name="closed" value="true" />
+      <created>1727433763683</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727433763683</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -141,6 +157,8 @@
     <MESSAGE value="jsonによる設定ファイルを追加" />
     <MESSAGE value="CUIによるstopコマンドを追加" />
     <MESSAGE value="音楽再生機能を追加（仮）" />
-    <option name="LAST_COMMIT_MESSAGE" value="音楽再生機能を追加（仮）" />
+    <MESSAGE value="一部修正" />
+    <MESSAGE value="キーワード検索に対応" />
+    <option name="LAST_COMMIT_MESSAGE" value="キーワード検索に対応" />
   </component>
 </project>
