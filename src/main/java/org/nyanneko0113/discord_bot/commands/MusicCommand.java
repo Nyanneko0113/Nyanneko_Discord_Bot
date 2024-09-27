@@ -15,6 +15,9 @@ import net.dv8tion.jda.api.requests.restaction.CacheRestAction;
 import org.nyanneko0113.discord_bot.manager.music.MusicManager;
 
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class MusicCommand extends ListenerAdapter {
 
@@ -32,7 +35,14 @@ public class MusicCommand extends ListenerAdapter {
         if ("play".equalsIgnoreCase(cmd)) {
             OptionMapping option_url = event.getOption("url");
 
-            music.loadAndPlay(channel.asTextChannel(), option_url.getAsString());
+            try {
+                URL url = new URL(option_url.getAsString());
+                music.loadAndPlay(channel.asTextChannel(), url.toURI().toString());
+            }
+            catch (URISyntaxException | MalformedURLException e) {
+                music.loadAndPlay(channel.asTextChannel(), "ytsearch:" + option_url.getAsString());
+            }
+
         }
         else if ("skip".equalsIgnoreCase(cmd)) {
             music.skipTrack(channel.asTextChannel());
