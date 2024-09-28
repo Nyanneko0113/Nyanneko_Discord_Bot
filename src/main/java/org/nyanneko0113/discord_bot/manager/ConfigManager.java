@@ -1,19 +1,24 @@
 package org.nyanneko0113.discord_bot.manager;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.nyanneko0113.discord_bot.Main;
 
 import java.io.*;
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class ConfigManager {
+
+    /*
+    public static String getEmail() throws IOException {
+        return getJson().get("niconico-email").getAsString();
+    }
+
+    public static String getPassword() throws IOException {
+        return getJson().get("niconico-password").getAsString();
+     }
+     */
 
     public static String getToken() throws IOException {
          return getJson().get("token").getAsString();

@@ -16,6 +16,7 @@ import org.nyanneko0113.discord_bot.manager.music.MusicManager;
 
 import java.awt.*;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.net.URL;
 

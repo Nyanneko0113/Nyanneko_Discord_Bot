@@ -10,11 +10,13 @@ import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManag
 import com.sedmelluq.discord.lavaplayer.source.beam.BeamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.getyarn.GetyarnAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.http.HttpAudioSourceManager;
+import com.sedmelluq.discord.lavaplayer.source.nico.NicoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
+import com.sedmelluq.discord.lavaplayer.track.AudioReference;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
@@ -27,8 +29,10 @@ import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
+import org.nyanneko0113.discord_bot.manager.ConfigManager;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +40,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MusicManager {
-    private static final MusicManager instance = new MusicManager();
-    private final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
+    private static final MusicManager instance;
+
+    static {
+        try {
+            instance = new MusicManager();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     private final Map<Long, GuildMusicManager> musicManagers = new HashMap<>();
     YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true);
 
-    public MusicManager() {
+    public MusicManager() throws IOException {
         AudioSourceManagers.registerLocalSource(playerManager);
 
         playerManager.registerSourceManager(yt);
@@ -52,6 +65,7 @@ public class MusicManager {
         playerManager.registerSourceManager(new BeamAudioSourceManager());
         playerManager.registerSourceManager(new GetyarnAudioSourceManager());
         playerManager.registerSourceManager(new HttpAudioSourceManager(MediaContainerRegistry.DEFAULT_REGISTRY));
+        // playerManager.registerSourceManager(new NicoAudioSourceManager(ConfigManager.getEmail(), ConfigManager.getPassword()));
     }
     
     public static MusicManager getInstance() {
@@ -82,65 +96,65 @@ public class MusicManager {
     }
 
     public void loadAndPlay(final TextChannel channel, final String trackUrl) {
-        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-        playerManager.loadItem(trackUrl, new AudioLoadResultHandler() {
-            @Override
-            public void trackLoaded(AudioTrack track) {
-                AudioTrackInfo info = track.getInfo();
-
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.setTitle("音楽が再生されます");
-                embed.addField("タイトル：", info.title, false);
-                embed.addField("URL：", info.uri, false);
-                embed.addField("時間：", minToString(info.length), false);
-                embed.setColor(Color.GREEN);
-                channel.sendMessageEmbeds(embed.build()).complete();
-
-                play(channel.getGuild(), channel, musicManager, track);
-            }
-
-            @Override
-            public void playlistLoaded(AudioPlaylist playlist) {
-                AudioTrack firstTrack = playlist.getSelectedTrack();
-
-                if (firstTrack == null) {
-                    List<AudioTrack> list = getGuildAudioPlayer(channel.getGuild()).wait_track;
-                    for (int n = 0; n < 5; n++) {
-                        list.add(playlist.getTracks().get(n));
-                    }
+            GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+            playerManager.loadItem(trackUrl, new AudioLoadResultHandler() {
+                @Override
+                public void trackLoaded(AudioTrack track) {
+                    AudioTrackInfo info = track.getInfo();
 
                     EmbedBuilder embed = new EmbedBuilder();
-                    for (int n = 0; n < list.size(); n++) {
-                        embed.addField(String.valueOf(n + 1), list.get(n).getInfo().title, true);
-                    }
+                    embed.setTitle("音楽が再生されます");
+                    embed.addField("タイトル：", info.title, false);
+                    embed.addField("URL：", info.uri, false);
+                    embed.addField("時間：", minToString(info.length), false);
+                    embed.setColor(Color.GREEN);
+                    channel.sendMessageEmbeds(embed.build()).complete();
 
-                    channel.sendMessageEmbeds(embed.build())
-                            .setActionRow(
-                                    Button.primary("one_button", "1"),
-                                    list.size() >= 2 ? Button.primary("two_button", "2") : Button.primary("two_button", "2").asDisabled(),
-                                    list.size() >= 3 ? Button.primary("there_button", "3"): Button.primary("there_button", "3").asDisabled(),
-                                    list.size() >= 4 ? Button.primary("four_button", "4"): Button.primary("four_button", "4").asDisabled(),
-                                    list.size() >= 5 ? Button.primary("five_button", "5"): Button.primary("five_button", "5").asDisabled())
-                            .queue();
+                    play(channel.getGuild(), channel, musicManager, track);
                 }
-            }
 
-            @Override
-            public void noMatches() {
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.addField("エラー",  trackUrl + " は見つかりませんでした", false);
-                embed.setColor(Color.RED);
-                channel.sendMessageEmbeds(embed.build()).complete();
-            }
+                @Override
+                public void playlistLoaded(AudioPlaylist playlist) {
+                    AudioTrack firstTrack = playlist.getSelectedTrack();
 
-            @Override
-            public void loadFailed(FriendlyException exception) {
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.addField("エラー",  "エラーが発生しました：" + exception.getMessage(), false);
-                embed.setColor(Color.RED);
-                channel.sendMessageEmbeds(embed.build()).complete();
-            }
-        });
+                    if (playlist.isSearchResult()) {
+                        List<AudioTrack> list = getGuildAudioPlayer(channel.getGuild()).wait_track;
+                        for (int n = 0; n < 5; n++) {
+                            list.add(playlist.getTracks().get(n));
+                        }
+
+                        EmbedBuilder embed = new EmbedBuilder();
+                        for (int n = 0; n < list.size(); n++) {
+                            embed.addField(String.valueOf(n + 1), list.get(n).getInfo().title, true);
+                        }
+
+                        channel.sendMessageEmbeds(embed.build())
+                                .setActionRow(
+                                        Button.primary("one_button", "1"),
+                                        list.size() >= 2 ? Button.primary("two_button", "2") : Button.primary("two_button", "2").asDisabled(),
+                                        list.size() >= 3 ? Button.primary("there_button", "3") : Button.primary("there_button", "3").asDisabled(),
+                                        list.size() >= 4 ? Button.primary("four_button", "4") : Button.primary("four_button", "4").asDisabled(),
+                                        list.size() >= 5 ? Button.primary("five_button", "5") : Button.primary("five_button", "5").asDisabled())
+                                .queue();
+                    }
+                }
+
+                @Override
+                public void noMatches() {
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.addField("エラー", trackUrl + " は見つかりませんでした", false);
+                    embed.setColor(Color.RED);
+                    channel.sendMessageEmbeds(embed.build()).complete();
+                }
+
+                @Override
+                public void loadFailed(FriendlyException exception) {
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.addField("エラー", "エラーが発生しました：" + exception.getMessage(), false);
+                    embed.setColor(Color.RED);
+                    channel.sendMessageEmbeds(embed.build()).complete();
+                }
+            });
     }
 
     public void play(Guild guild, TextChannel channel, GuildMusicManager musicManager, AudioTrack track) {
@@ -148,6 +162,7 @@ public class MusicManager {
 
         AudioTrackInfo info = track.getInfo();
         if (musicManager.player.getPlayingTrack() == null) {
+            System.out.print(track.getInfo().author);
             musicManager.player.playTrack(track);
             EmbedBuilder embed = new EmbedBuilder();
             embed.setTitle("音楽が再生されます");
