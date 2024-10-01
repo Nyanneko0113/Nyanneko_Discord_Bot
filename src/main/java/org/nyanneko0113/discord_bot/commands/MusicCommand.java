@@ -7,11 +7,14 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.requests.restaction.CacheRestAction;
+import org.nyanneko0113.discord_bot.manager.CommandButtonManager;
 import org.nyanneko0113.discord_bot.manager.music.MusicManager;
 
 import java.awt.*;
@@ -19,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Date;
 
 public class MusicCommand extends ListenerAdapter {
 
@@ -31,7 +35,7 @@ public class MusicCommand extends ListenerAdapter {
         User user = event.getUser();
         CacheRestAction<PrivateChannel> private_channel = user.openPrivateChannel();
         Member member = event.getMember();
-        MusicManager music = MusicManager.getInstance();
+        MusicManager music = MusicManager.getInstance(event.getUser());
 
         if ("play".equalsIgnoreCase(cmd)) {
             OptionMapping option_url = event.getOption("url");
@@ -50,7 +54,6 @@ public class MusicCommand extends ListenerAdapter {
         }
         else if ("play-info".equalsIgnoreCase(cmd)) {
             MusicManager.GuildMusicManager guild_music = music.getGuildAudioPlayer(event.getGuild());
-
             EmbedBuilder embed = new EmbedBuilder();
             if (guild_music == null || guild_music.getTrack() == null) {
                 embed.addField("現在の再生情報：", "何も再生されてません。", false);
@@ -62,8 +65,12 @@ public class MusicCommand extends ListenerAdapter {
                 embed.addField("URL：", info.uri, false);
                 embed.addField("時間：", MusicManager.minToString(info.length), false);
             }
+            CommandButtonManager.addCommandButton("play-info", new Date(System.currentTimeMillis()), user);
             embed.setColor(Color.GREEN);
-            event.replyEmbeds(embed.build()).queue();
+            event.replyEmbeds(embed.build())
+                    .setActionRow(Button.primary("volume_up", Emoji.fromUnicode("U+1F50A")),
+                            Button.primary("volume_down", Emoji.fromUnicode("U+1F509")))
+                    .queue();
 
         }
     }

@@ -10,51 +10,35 @@ import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManag
 import com.sedmelluq.discord.lavaplayer.source.beam.BeamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.getyarn.GetyarnAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.http.HttpAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.source.nico.NicoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.soundcloud.SoundCloudAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import com.sedmelluq.discord.lavaplayer.track.AudioReference;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
-import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.managers.AudioManager;
-import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
-import org.nyanneko0113.discord_bot.manager.ConfigManager;
+import org.nyanneko0113.discord_bot.manager.CommandButtonManager;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class MusicManager {
-    private static final MusicManager instance;
 
-    static {
-        try {
-            instance = new MusicManager();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    private static MusicManager instance;
+    private static User user;
     public final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     private final Map<Long, GuildMusicManager> musicManagers = new HashMap<>();
     YoutubeAudioSourceManager yt = new YoutubeAudioSourceManager(true);
 
-    public MusicManager() throws IOException {
+    public MusicManager(User user) {
         AudioSourceManagers.registerLocalSource(playerManager);
 
         playerManager.registerSourceManager(yt);
@@ -67,8 +51,16 @@ public class MusicManager {
         playerManager.registerSourceManager(new HttpAudioSourceManager(MediaContainerRegistry.DEFAULT_REGISTRY));
         // playerManager.registerSourceManager(new NicoAudioSourceManager(ConfigManager.getEmail(), ConfigManager.getPassword()));
     }
-    
-    public static MusicManager getInstance() {
+
+    public User getRunUser() {
+        return user;
+    }
+
+    public static MusicManager getInstance(User user) {
+        if (instance == null) {
+            MusicManager.user = user;
+            instance = new MusicManager(user);
+        }
         return instance;
     }
 
@@ -118,7 +110,7 @@ public class MusicManager {
                     AudioTrack firstTrack = playlist.getSelectedTrack();
 
                     if (playlist.isSearchResult()) {
-                        List<AudioTrack> list = getGuildAudioPlayer(channel.getGuild()).wait_track;
+                        List<AudioTrack> list = getGuildAudioPlayer(channel.getGuild()).getWaitTrack();
                         for (int n = 0; n < 5; n++) {
                             list.add(playlist.getTracks().get(n));
                         }
@@ -128,6 +120,7 @@ public class MusicManager {
                             embed.addField(String.valueOf(n + 1), list.get(n).getInfo().title, true);
                         }
 
+                        CommandButtonManager.addCommandButton("play", new Date(System.currentTimeMillis()), user);
                         channel.sendMessageEmbeds(embed.build())
                                 .setActionRow(
                                         Button.primary("one_button", "1"),
@@ -201,6 +194,16 @@ public class MusicManager {
         musicManager.scheduler.nextTrack();
     }
 
+    public void setVolume(TextChannel channel, int volume) {
+        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+        musicManager.player.setVolume(volume);
+    }
+
+    public int getVolume(TextChannel channel) {
+        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+        return musicManager.player.getVolume();
+    }
+
     private static void connectToFirstVoiceChannel(AudioManager audioManager) {
         if (!audioManager.isConnected()) {
             for (VoiceChannel voiceChannel : audioManager.getGuild().getVoiceChannels()) {
@@ -214,7 +217,7 @@ public class MusicManager {
     public static class GuildMusicManager {
         public final AudioPlayer player;
         public final TrackScheduler scheduler;
-        public List<AudioTrack> wait_track = new ArrayList<>();
+        private final List<AudioTrack> wait_track = new ArrayList<>();
         public AudioTrack click_track;
 
         public GuildMusicManager(AudioPlayerManager manager) {
@@ -229,6 +232,10 @@ public class MusicManager {
 
         public AudioTrack getTrack() {
             return player.getPlayingTrack();
+        }
+
+        public List<AudioTrack> getWaitTrack() {
+            return wait_track;
         }
     }
 

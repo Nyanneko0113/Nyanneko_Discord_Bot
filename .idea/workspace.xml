@@ -9,10 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="キーワード検索時にボタンを追加">
+    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="一部修正">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/CommandButtonManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/MusicCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/MusicCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/ButtonClickListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/ButtonClickListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/music/MusicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/music/MusicManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -156,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727436556126</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="一部修正">
+      <option name="closed" value="true" />
+      <created>1727516571907</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727516571907</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -165,10 +174,10 @@
     <MESSAGE value="jsonによる設定ファイルを追加" />
     <MESSAGE value="CUIによるstopコマンドを追加" />
     <MESSAGE value="音楽再生機能を追加（仮）" />
-    <MESSAGE value="一部修正" />
     <MESSAGE value="キーワード検索に対応" />
     <MESSAGE value="キーワード検索時にボタンを追加" />
-    <option name="LAST_COMMIT_MESSAGE" value="キーワード検索時にボタンを追加" />
+    <MESSAGE value="一部修正" />
+    <option name="LAST_COMMIT_MESSAGE" value="一部修正" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
