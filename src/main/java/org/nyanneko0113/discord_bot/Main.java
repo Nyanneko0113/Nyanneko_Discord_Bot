@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.nyanneko0113.discord_bot.commands.MusicCommand;
 import org.nyanneko0113.discord_bot.commands.ReservedCommand;
+import org.nyanneko0113.discord_bot.commands.WebHookCommand;
 import org.nyanneko0113.discord_bot.listener.ButtonClickListener;
 import org.nyanneko0113.discord_bot.manager.ConfigManager;
 
@@ -37,6 +38,7 @@ public class Main extends ListenerAdapter implements EventListener {
                     .addEventListeners(new ReservedCommand())
                     .addEventListeners(new MusicCommand())
                     .addEventListeners(new ButtonClickListener())
+                    .addEventListeners(new WebHookCommand())
                     .build();
             jda.awaitReady();
 
@@ -48,6 +50,7 @@ public class Main extends ListenerAdapter implements EventListener {
                             .addOption(OptionType.STRING, "url", "URL"))
                     .addCommands(Commands.slash("skip", "スキップするコマンド"))
                     .addCommands(Commands.slash("play-info", "情報"))
+                    .addCommands(Commands.slash("webhook", "a"))
                     .queue();
         }
 
