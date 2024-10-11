@@ -8,13 +8,14 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
-import org.nyanneko0113.discord_bot.commands.MusicCommand;
-import org.nyanneko0113.discord_bot.commands.ReservedCommand;
-import org.nyanneko0113.discord_bot.commands.WebHookCommand;
+import org.nyanneko0113.discord_bot.commands.*;
 import org.nyanneko0113.discord_bot.listener.ButtonClickListener;
 import org.nyanneko0113.discord_bot.manager.ConfigManager;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
+import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -39,18 +40,23 @@ public class Main extends ListenerAdapter implements EventListener {
                     .addEventListeners(new MusicCommand())
                     .addEventListeners(new ButtonClickListener())
                     .addEventListeners(new WebHookCommand())
+                    .addEventListeners(new EarthquakeCommand())
+                    .addEventListeners(new UserInfoCommand())
                     .build();
             jda.awaitReady();
 
             jda.updateCommands()
                     .addCommands(Commands.slash("reserved-message", "予約投稿するコマンド")
                             .addOptions(new OptionData(OptionType.STRING, "date", "時間"),
-                                        new OptionData(OptionType.STRING, "message", "メッセージ")))
+                                    new OptionData(OptionType.STRING, "message", "メッセージ")))
                     .addCommands(Commands.slash("play", "音楽を再生するコマンド")
                             .addOption(OptionType.STRING, "url", "URL"))
                     .addCommands(Commands.slash("skip", "スキップするコマンド"))
                     .addCommands(Commands.slash("play-info", "情報"))
                     .addCommands(Commands.slash("webhook", "a"))
+                    .addCommands(Commands.slash("get-earthquake", "i"))
+                    .addCommands(Commands.slash("user-info", "uu")
+                            .addOption(OptionType.STRING, "user", "user"))
                     .queue();
         }
 
@@ -69,6 +75,7 @@ public class Main extends ListenerAdapter implements EventListener {
             System.out.print(">");
         }
     }
+
 
     public static JDA getJda() {
         return jda;
