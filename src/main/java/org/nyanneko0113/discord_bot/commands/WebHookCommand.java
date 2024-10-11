@@ -1,6 +1,7 @@
 package org.nyanneko0113.discord_bot.commands;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
@@ -28,32 +29,35 @@ public class WebHookCommand extends ListenerAdapter {
         Member member = event.getMember();
 
         if ("webhook".equalsIgnoreCase(cmd)) {
-            boolean check = true;
-            AtomicInteger n = new AtomicInteger();
-            Message message = channel.sendMessage("削除中...").complete();
-            while (check) {
-                List<Message> list = channel.asTextChannel().getHistory().retrievePast(100).complete();
+            if (member.getPermissions().contains(Permission.BAN_MEMBERS)) {
+                boolean check = true;
+                AtomicInteger n = new AtomicInteger();
+                Message message = channel.sendMessage("削除中...").complete();
+                while (check) {
+                    List<Message> list = channel.asTextChannel().getHistory().retrievePast(100).complete();
 
-                if (list.isEmpty()) {
-                    break;
-                }
+                    if (list.isEmpty()) {
+                        break;
+                    }
 
-                for (Message a : list) {
-                    OffsetDateTime now = OffsetDateTime.now();
-                    if (a.getTimeCreated().isAfter(OffsetDateTime.of(now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), 0, 0, 0, 0, ZoneOffset.UTC))) {
-                        if (a.isWebhookMessage()) {
-                            a.delete().queue();
-                            n.getAndIncrement();
+                    for (Message a : list) {
+                        OffsetDateTime now = OffsetDateTime.now();
+                        if (a.getTimeCreated().isAfter(OffsetDateTime.of(now.getYear(), now.getMonth().getValue(), now.getDayOfMonth(), 0, 0, 0, 0, ZoneOffset.UTC))) {
+                            if (a.isWebhookMessage()) {
+                                a.delete().queue();
+                                n.getAndIncrement();
 
-                            if (list.isEmpty()) {
-                                check=false;
-                                break;
+                                if (list.isEmpty()) {
+                                    check=false;
+                                    break;
+                                }
+                                message.editMessage( "webhookを"  +n + "件削除しました。").complete();
                             }
-                            message.editMessage( "webhookを"  +n + "件削除しました。").complete();
                         }
                     }
                 }
             }
+
 
 
 
