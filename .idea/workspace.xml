@@ -9,14 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="WebHookのメッセージを削除するコマンドを追加（仮）">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/EarthquakeCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/UserInfoCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/EarthquakeManager.java" afterDir="false" />
+    <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="一部追加">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/guild/GuildInfoCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/SlashCommandListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/UserJoinLeaveListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/WebHookCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/WebHookCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +183,47 @@
       <option name="project" value="LOCAL" />
       <updated>1728033892958</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="ユーザーの情報コマンドを追加">
+      <option name="closed" value="true" />
+      <created>1728642763299</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1728642763300</updated>
+    </task>
+    <task id="LOCAL-00013" summary="地震コマンドを追加（仮）">
+      <option name="closed" value="true" />
+      <created>1728642810778</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1728642810778</updated>
+    </task>
+    <task id="LOCAL-00014" summary="一部追加">
+      <option name="closed" value="true" />
+      <created>1728642841444</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1728642841444</updated>
+    </task>
+    <task id="LOCAL-00015" summary="権限を修正">
+      <option name="closed" value="true" />
+      <created>1728642871153</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1728642871153</updated>
+    </task>
+    <task id="LOCAL-00016" summary="一部追加">
+      <option name="closed" value="true" />
+      <created>1728642887756</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1728642887756</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -198,7 +237,11 @@
     <MESSAGE value="一部修正" />
     <MESSAGE value="ボタンを修正" />
     <MESSAGE value="WebHookのメッセージを削除するコマンドを追加（仮）" />
-    <option name="LAST_COMMIT_MESSAGE" value="WebHookのメッセージを削除するコマンドを追加（仮）" />
+    <MESSAGE value="ユーザーの情報コマンドを追加" />
+    <MESSAGE value="地震コマンドを追加（仮）" />
+    <MESSAGE value="権限を修正" />
+    <MESSAGE value="一部追加" />
+    <option name="LAST_COMMIT_MESSAGE" value="一部追加" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
