@@ -2,14 +2,19 @@ package org.nyanneko0113.discord_bot;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.nyanneko0113.discord_bot.commands.*;
+import org.nyanneko0113.discord_bot.commands.guild.GuildInfoCommand;
 import org.nyanneko0113.discord_bot.listener.ButtonClickListener;
+import org.nyanneko0113.discord_bot.listener.SlashCommandListener;
+import org.nyanneko0113.discord_bot.listener.UserJoinLeaveListener;
 import org.nyanneko0113.discord_bot.manager.ConfigManager;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +40,7 @@ public class Main extends ListenerAdapter implements EventListener {
 
         if (jda == null) {
             jda = JDABuilder.createDefault(ConfigManager.getToken())
+                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
                     .addEventListeners(new Main())
                     .addEventListeners(new ReservedCommand())
                     .addEventListeners(new MusicCommand())
@@ -42,6 +48,9 @@ public class Main extends ListenerAdapter implements EventListener {
                     .addEventListeners(new WebHookCommand())
                     .addEventListeners(new EarthquakeCommand())
                     .addEventListeners(new UserInfoCommand())
+                    .addEventListeners(new GuildInfoCommand())
+                    .addEventListeners(new UserJoinLeaveListener())
+                    .addEventListeners(new SlashCommandListener())
                     .build();
             jda.awaitReady();
 
@@ -57,6 +66,7 @@ public class Main extends ListenerAdapter implements EventListener {
                     .addCommands(Commands.slash("get-earthquake", "i"))
                     .addCommands(Commands.slash("user-info", "uu")
                             .addOption(OptionType.STRING, "user", "user"))
+                    .addCommands(Commands.slash("guild-info", "ギルド"))
                     .queue();
         }
 
