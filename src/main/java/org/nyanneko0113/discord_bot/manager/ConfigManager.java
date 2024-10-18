@@ -1,8 +1,11 @@
 package org.nyanneko0113.discord_bot.manager;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import org.nyanneko0113.discord_bot.Main;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -20,8 +23,20 @@ public class ConfigManager {
      }
      */
 
+    public static TextChannel getSlashCommandLogChannel(String guild_id) throws IOException{
+        JsonArray guild_array = getJson().getAsJsonArray("guild_setting");
+        for (int n = 0; n < guild_array.size(); n++) {
+            JsonObject guild_setting = guild_array.get(n).getAsJsonObject();
+            System.out.print(guild_setting.toString());
+            if (guild_setting.get("guild_id").getAsString().equalsIgnoreCase(guild_id)) {
+                return Main.getJda().getTextChannelById(guild_setting.get("slashcommand_logchannel").getAsString());
+            }
+        }
+        return null;
+    }
+
     public static String getToken() throws IOException {
-         return getJson().get("token").getAsString();
+         return getJson().getAsJsonObject("bot_setting").get("token").getAsString();
     }
 
     public static void setToken(String token) throws IOException {
