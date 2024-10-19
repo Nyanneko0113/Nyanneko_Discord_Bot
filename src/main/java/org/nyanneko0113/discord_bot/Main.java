@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.nyanneko0113.discord_bot.commands.*;
 import org.nyanneko0113.discord_bot.commands.guild.GuildInfoCommand;
 import org.nyanneko0113.discord_bot.listener.ButtonClickListener;
+import org.nyanneko0113.discord_bot.listener.MessageListener;
 import org.nyanneko0113.discord_bot.listener.SlashCommandListener;
 import org.nyanneko0113.discord_bot.listener.UserJoinLeaveListener;
 import org.nyanneko0113.discord_bot.manager.ConfigManager;
@@ -40,7 +41,7 @@ public class Main extends ListenerAdapter implements EventListener {
 
         if (jda == null) {
             jda = JDABuilder.createDefault(ConfigManager.getToken())
-                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                    .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT)
                     .addEventListeners(new Main())
                     .addEventListeners(new ReservedCommand())
                     .addEventListeners(new MusicCommand())
@@ -51,6 +52,7 @@ public class Main extends ListenerAdapter implements EventListener {
                     .addEventListeners(new GuildInfoCommand())
                     .addEventListeners(new UserJoinLeaveListener())
                     .addEventListeners(new SlashCommandListener())
+                    .addEventListeners(new MessageListener())
                     .build();
             jda.awaitReady();
 

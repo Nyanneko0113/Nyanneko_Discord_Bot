@@ -1,15 +1,14 @@
 package org.nyanneko0113.discord_bot.manager;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import org.nyanneko0113.discord_bot.Main;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigManager {
 
@@ -33,6 +32,22 @@ public class ConfigManager {
             }
         }
         return null;
+    }
+
+    public static List<String> getBadWord(String guild_id) throws IOException{
+        JsonArray guild_array = getJson().getAsJsonArray("guild_setting");
+        List<String> bad_list = new ArrayList<>();
+        for (int n = 0; n < guild_array.size(); n++) {
+            JsonObject guild_setting = guild_array.get(n).getAsJsonObject();
+            if (guild_setting.get("guild_id").getAsString().equalsIgnoreCase(guild_id)) {
+                JsonArray bad_word = guild_setting.getAsJsonArray("bad_word");
+                for (int i = 0; i < bad_word.size(); i++) {
+                    bad_list.add(bad_word.get(n).getAsString());
+                }
+
+            }
+        }
+        return bad_list;
     }
 
     public static String getToken() throws IOException {

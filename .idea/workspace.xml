@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49a70f11-fce6-4696-a6a8-8b284c664d18" name="変更" comment="一部追加">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/commands/guild/GuildInfoCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/SlashCommandListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/UserJoinLeaveListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/listener/MessageListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/nyanneko0113/discord_bot/manager/ConfigManager.java" afterDir="false" />
@@ -223,7 +221,55 @@
       <option name="project" value="LOCAL" />
       <updated>1728642887756</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="ギルドInfoコマンドを追加">
+      <option name="closed" value="true" />
+      <created>1729257651037</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1729257651037</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Slashコマンドのログを追加">
+      <option name="closed" value="true" />
+      <created>1729257674012</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1729257674012</updated>
+    </task>
+    <task id="LOCAL-00019" summary="参加離脱ログを追加">
+      <option name="closed" value="true" />
+      <created>1729257687667</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1729257687667</updated>
+    </task>
+    <task id="LOCAL-00020" summary="コマンドを追加">
+      <option name="closed" value="true" />
+      <created>1729257700646</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1729257700646</updated>
+    </task>
+    <task id="LOCAL-00021" summary="COnfigに設定を追加">
+      <option name="closed" value="true" />
+      <created>1729257727315</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1729257727315</updated>
+    </task>
+    <task id="LOCAL-00022" summary="一部追加">
+      <option name="closed" value="true" />
+      <created>1729257741428</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1729257741428</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -240,6 +286,11 @@
     <MESSAGE value="ユーザーの情報コマンドを追加" />
     <MESSAGE value="地震コマンドを追加（仮）" />
     <MESSAGE value="権限を修正" />
+    <MESSAGE value="ギルドInfoコマンドを追加" />
+    <MESSAGE value="Slashコマンドのログを追加" />
+    <MESSAGE value="参加離脱ログを追加" />
+    <MESSAGE value="コマンドを追加" />
+    <MESSAGE value="COnfigに設定を追加" />
     <MESSAGE value="一部追加" />
     <option name="LAST_COMMIT_MESSAGE" value="一部追加" />
   </component>
