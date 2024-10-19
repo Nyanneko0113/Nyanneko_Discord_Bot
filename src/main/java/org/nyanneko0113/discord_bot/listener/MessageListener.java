@@ -24,16 +24,46 @@ public class MessageListener extends ListenerAdapter {
         String message_string = message.getContentRaw();
         Guild guild = event.getGuild();
 
-        try {
-            if (ConfigManager.getBadWord(guild.getId()).contains(message_string)) {
-                message.delete().queue();
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.addField("禁止ワード", "そのワードは送ることができません", false);
-                event.getChannel().asTextChannel().sendMessageEmbeds(embed.build()).complete();
+        if (message_string.contains("https://discord.com")) {
+            Message get_message = getMessage(message_string);
+
+            EmbedBuilder emebed = new EmbedBuilder();
+            if (get_message != null) {
+                emebed.setAuthor(get_message.getAuthor().getName(), null, get_message.getAuthor().getAvatarUrl());
+                emebed.setDescription(get_message.getContentRaw());
+                emebed.setTimestamp(OffsetDateTime.now());
+                event.getChannel().asTextChannel().sendMessageEmbeds(emebed.build()).queue();
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            else {
+                emebed.addField("エラー", "そのメッセージは見つかりませんでした。", false);
+                event.getChannel().asTextChannel().sendMessageEmbeds(emebed.build()).queue();
+            }
+
         }
+        else {
+            try {
+                if (ConfigManager.getBadWord(guild.getId()).contains(message_string)) {
+                    message.delete().queue();
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.addField("禁止ワード", "そのワードは送ることができません", false);
+                    event.getChannel().asTextChannel().sendMessageEmbeds(embed.build()).complete();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private static Message getMessage(String url) {
+        TextChannel channel = Main.getJda().getChannelById(TextChannel.class, url.substring(url.length() - 39, url.length() - 20));
+        if (channel != null) {
+            Message message = channel.retrieveMessageById(url.substring(url.length() - 19)).complete();
+
+            System.out.print(channel + "\n" + message);
+
+            return message;
+        }
+        return null;
     }
 
 }
